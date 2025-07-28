@@ -24,5 +24,20 @@
                #{createUser},
                #{updateTime},
                #{updateUser})
+
+
+
     </insert>
+    <select id="pageQuery" resultType="com.sky.vo.DishVO">
+        select d.*,c.name as categoryName from dish d left outer join category c on d.category_id = c.id
+        <where>
+            <if test="name !=null">
+                and d.name like concat('%',#{name},'%')
+            </if>
+            <if test="status != null">
+                and d.status = #{status}
+            </if>
+        </where>
+        order by d.update_time desc
+    </select>
 </mapper>
